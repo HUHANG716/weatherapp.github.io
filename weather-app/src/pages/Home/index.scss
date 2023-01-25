@@ -1,0 +1,74 @@
+.card-container {
+
+
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 90%;
+    justify-content: space-between;
+    overflow: hidden;
+
+    .cards {
+
+        position: relative;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        display: flex;
+
+        align-items: center;
+        transition: all 0.5s;
+
+        .card {
+
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            height: 60vh;
+
+
+
+
+            overflow: hidden;
+            flex-shrink: 0;
+
+            .card-footer {
+
+                i {
+                    font-size: 16px;
+                }
+
+
+
+
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+
+
+
+
+            }
+        }
+    }
+
+
+
+
+}
+
+
+.container {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+
+    i {
+
+        font-size: 64px;
+    }
+
+}
