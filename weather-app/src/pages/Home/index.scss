@@ -67,9 +67,11 @@
 }
 
 .container {
+   
     display: flex;
     justify-content: center;
     height: 100%;
+    width: 100%;
     align-items: center;
 
     i {
@@ -97,4 +99,11 @@
 }
 .drawer{
  
+}
+.spin{
+    
+    position: absolute;
+    
+    
+    width: 100vw;
 }

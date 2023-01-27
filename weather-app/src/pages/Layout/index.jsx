@@ -1,6 +1,6 @@
 import React from "react";
 import Home from "../Home";
-import { Button, Col, Layout as Frame, Menu, Row, Space, Switch, Typography } from "antd";
+import { Button, Col, Layout as Frame, Menu, Row, Space, Spin, Switch, Typography } from "antd";
 import "./index.scss";
 import { useState } from "react";
 import { useTheme } from "../../utiles/theme";
@@ -11,7 +11,7 @@ export const ThemeContext = createContext();
 const { Header, Footer, Content } = Frame;
 
 const Layout = () => {
-  const [cities, setCities] = useState(["London", "Beijing", "Sydney"]);
+  const [cities, setCities] = useState(["London", "Beijing", "Sydney","Tokyo","Paris"]);
   const fn = (input) => {
     setCities([input].concat(cities));
   };
@@ -24,9 +24,9 @@ const Layout = () => {
 
   return (
     <ThemeContext.Provider value={theme}>
-      <Frame style={{ height: "100vh", backgroundColor: tertiary }}>
+      <Frame className="bg" style={{background: tertiary, height: "100vh" }}>
         <Header
-          style={{ backgroundColor: primary, color: contrast }}
+          style={{ background: primary, color: contrast }}
           className="header"
         >
           <Row style={{width:'100%'}} align="middle" justify='' >
@@ -52,7 +52,7 @@ const Layout = () => {
               Light
             </Typography.Title>
             <Switch
-              style={{ color: contrast, backgroundColor: tertiary }}
+              style={{ color: contrast, background: tertiary }}
               defaultChecked
               onChange={switchHandler}
             />
@@ -64,7 +64,9 @@ const Layout = () => {
           </Row>
         </Header>
         <Content>
+          
           <Outlet context={[cities]}></Outlet>
+          
         </Content>
       </Frame>
     </ThemeContext.Provider>

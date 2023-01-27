@@ -1,4 +1,4 @@
-import { Select, message } from "antd";
+import { Select, message, Spin } from "antd";
 import React from "react";
 import { useState } from "react";
 import { getCities } from "../../utiles/weatherapi";
@@ -23,6 +23,17 @@ function Autocomplete({ fn, width, focusWidth }) {
       setData([]);
     }
   };
+  const handleNoContent = () => {
+    if (value?.length > 2) {
+      if (data !== []) {
+        return "Loading...";
+      } else {
+        return "Not Found";
+      }
+    } else {
+      return null;
+    }
+  };
   const handleChange = (newValue) => {
     if (newValue !== undefined && newValue.length > 2) {
       fn(newValue);
@@ -37,8 +48,9 @@ function Autocomplete({ fn, width, focusWidth }) {
       });
   };
   return (
+    
     <Select
-      dropdownMatchSelectWidth
+      dropdownMatchSelectWidth={false}
       allowClear
       suffixIcon={<i style={{}} className="fa-solid fa-magnifying-glass"></i>}
       onFocus={() => setWidth(focusWidth)}
@@ -47,14 +59,14 @@ function Autocomplete({ fn, width, focusWidth }) {
       showSearch
       size="large"
       value={value}
-      placeholder="Search for a city here!"
+      placeholder="Search for a city here."
       style={{ width: curwidth }}
       defaultActiveFirstOption={false}
       showArrow={true}
       filterOption={false}
       onSearch={handleSearch}
       onChange={handleChange}
-      notFoundContent={null}
+     
       options={(data || []).map(({ country, region, name }) => {
         return {
           value: name,
