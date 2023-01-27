@@ -1,79 +1,93 @@
-import { Button, Card, Col, Row, Space, Typography } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Drawer,
+  Row,
+  Space,
+  Typography,
+  message,
+} from "antd";
 import React, { useEffect } from "react";
 import { useContext } from "react";
 import { ThemeContext } from "../Layout";
 import { useRef } from "react";
 import "./index.scss";
 import { useState } from "react";
-import { getWeather } from "../../utiles/weather";
+import { getWeather } from "../../utiles/weatherapi";
+import { createContext } from "react";
+import { useOutletContext } from "react-router-dom";
+import CardSwiper from "../../component/CardSwiper";
+import 'swiper/css';
+let index = 0;
+let left = 0;
+
 const Home = () => {
+  const [cities] = useOutletContext();
+  console.log(cities);
   const { contrast, tertiary, secondary, primary } = useContext(ThemeContext);
   const useDom = useRef(null);
-  let left = 0;
-  const [temp,setTemp]=useState(0)
+  const [temp, setTemp] = useState(0);
   const [apiData, setApiData] = useState([]);
-  const [cities, setcities] = useState([
-    "London",
-    "Beijing",
-    "Sydney",
-    "Sydney",
-    "Sydney",
-    "Sydney",
-  ]);
-  let index = 0;
+    const card=useRef(null)
+   
   useEffect(() => {
+   
     getWeather(cities).then((res) => {
       setApiData(res);
       return true;
     });
-    useDom.current.style.left='0%'
-  }, [cities,temp]);
+  }, [cities]);
 
   const prev = (e) => {
-  
     if (index !== 0) {
-      
       left += 33.3;
       index = index - 1;
-      setTemp(index-1)
+
       console.log(temp);
+      setTemp(index);
       useDom.current.style.left = left + "%";
-     
     } else {
-        
-     
     }
     console.log(useDom.current.style.left);
   };
   const next = () => {
-    if (index !== cities.length - 2) {
+    if (index !== cities.length) {
       index = index + 1;
       left -= 33.3;
       useDom.current.style.left = left + "%";
-      setTemp(index+1)
+      setTemp(index);
       console.log(useDom.current.style.left);
+      
+      
     }
   };
 
   return (
     <>
+    
+            <CardSwiper></CardSwiper>
+          
       <div className="container">
+          
         <Button
-         
+          disabled={temp === 0}
           style={{ color: contrast }}
-          onClick={(e) => prev(e)}
+          onClick={() => prev()}
           className="prevent"
           type="text"
         >
           <i className="fa-solid fa-caret-left"></i>
         </Button>
-        <Row gutter={24} className="card-container">
+       
           <div ref={useDom} className="cards">
+            
             {apiData.map(({ current, location, forecast }, index) => {
               const { maxtemp_c, mintemp_c } = forecast.forecastday[0].day;
               return (
-                <Col key={index} span={8}>
+              
                   <Card
+
                     style={{ backgroundColor: secondary }}
                     className="card"
                     hoverable
@@ -90,23 +104,29 @@ const Home = () => {
                       color: contrast,
                     }}
                     cover={
-                      <img
-                        style={{ height: "128px" }}
-                        alt="example"
-                        src={current.condition.icon}
-                      />
+                      <div style={{ width: "100%" }}>
+                        <img
+                          style={{ height: "128px", width: "128px" }}
+                          alt="example"
+                          src={current.condition.icon}
+                        />
+                        <div className="info-container">
+                          <Typography.Title
+                            style={{ margin: 0, color: contrast }}
+                          >
+                            {current.temp_c}°C
+                          </Typography.Title>
+
+                          <Typography.Title
+                            level={5}
+                            style={{ margin: 0, color: contrast }}
+                          >
+                            {current.condition.text}
+                          </Typography.Title>
+                        </div>
+                      </div>
                     }
                   >
-                    <Typography.Title style={{ margin: 0, color: contrast }}>
-                      {current.temp_c}°C
-                    </Typography.Title>
-
-                    <Typography.Title
-                      style={{ margin: 0, color: contrast }}
-                      level={3}
-                    >
-                      {current.condition.text}
-                    </Typography.Title>
                     <div className="card-footer">
                       <Space.Compact direction="vertical">
                         <i
@@ -146,12 +166,17 @@ const Home = () => {
                       </Space.Compact>
                     </div>
                   </Card>
-                </Col>
+              
               );
             })}
           </div>
-        </Row>
-        <Button style={{ color: contrast }} onClick={next} type="text">
+       
+        <Button
+          disabled={temp === cities.length}
+          style={{ color: contrast }}
+          onClick={next}
+          type="text"
+        >
           <i className="fa-solid fa-caret-right"></i>
         </Button>
       </div>

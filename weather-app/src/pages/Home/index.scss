@@ -20,15 +20,14 @@
         transition: all 0.5s;
 
         .card {
-
+            
             text-align: center;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: space-around;
             align-items: center;
-            height: 60vh;
-
-
+           
+            height: 50vh;
 
 
             overflow: hidden;
@@ -41,7 +40,7 @@
                 }
 
 
-
+              
 
                 width: 100%;
                 display: flex;
@@ -58,7 +57,14 @@
 
 
 }
-
+.info-container{
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+     height:96px;
+     
+}
 
 .container {
     display: flex;
@@ -71,4 +77,24 @@
         font-size: 64px;
     }
 
+}
+.city-add-btn{
+    overflow: hidden;
+    text-align: center;
+    height: 60vh;
+    
+   display: flex;
+   flex-direction: column;
+    justify-content: center;
+    
+    
+    i{  
+        font-weight:400;
+        font-size: 104px;
+    }
+   
+   
+}
+.drawer{
+ 
 }

@@ -8,4 +8,12 @@ const getWeather=async(cities)=>{
     return res.map(res=>res.data)
 
 }
-export {getWeather}
+
+const getCities=async(str)=>{
+
+    const res=await http.get(`/search.json?key=5bcb44ae91b44a859ea45015232501&q=${str}`)
+    
+    return res
+
+}
+export {getWeather,getCities}
