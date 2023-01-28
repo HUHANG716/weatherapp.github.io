@@ -1,16 +1,18 @@
 import React, { useContext } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
-import { Card, Space, Typography } from "antd";
+import { Button, Card, Space, Typography } from "antd";
 import { ThemeContext } from "../../pages/Layout";
 import "./index.scss";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
+import { useOutletContext } from "react-router-dom";
 
 const CardSwiper = ({ cardData }) => {
-  const { contrast, tertiary, secondary, primary } = useContext(ThemeContext);
+  const { theme, deleteCard } = useContext(ThemeContext);
+  const { contrast, tertiary, secondary, primary } = theme;
 
   return (
     <>
@@ -19,7 +21,7 @@ const CardSwiper = ({ cardData }) => {
         slidesPerView={1}
         spaceBetween={0}
         breakpoints={{
-          640: {
+          440: {
             slidesPerView: 2,
             spaceBetween: 20,
           },
@@ -43,7 +45,21 @@ const CardSwiper = ({ cardData }) => {
                 style={{ background: secondary }}
                 className="card"
                 hoverable
-                title={location.name}
+                title={
+                  <div className="title-container">
+                    {location.name}
+
+                    <div
+                      style={{ borderRadius: "100px" }}
+                      onClick={() => deleteCard(location.name)}
+                    >
+                      <i
+                        style={{ color: contrast }}
+                        className="x-icon fa-solid fa-xmark"
+                      ></i>
+                    </div>
+                  </div>
+                }
                 bodyStyle={{
                   width: "100%",
 

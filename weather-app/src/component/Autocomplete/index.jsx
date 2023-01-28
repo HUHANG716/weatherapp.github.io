@@ -4,41 +4,39 @@ import { useState } from "react";
 import { getCities } from "../../utiles/weatherapi";
 import { useTheme } from "../../utiles/theme";
 import "./index.scss";
+let temp = [];
 function Autocomplete({ fn, width, focusWidth }) {
   const [value, setValue] = useState();
   const [data, setData] = useState([]);
-  const [size, setSize] = useState("middle");
+
+  const [result, setResult] = useState(null);
   const handleSearch = (newValue) => {
     if (newValue) {
       if (newValue.length > 2 && newValue !== undefined) {
-        console.log("carry");
+        setResult(<Spin></Spin>);
         getCities(newValue).then((res) => {
-          setData(res.data.slice(0, 10));
+          res.data && setData(res.data);
+          res.data.length === 0 && setResult(<h3>Not Found</h3>);
+          temp = res.data;
 
           return true;
         });
-      }
-    } else {
-      setData([]);
-    }
-  };
-  const handleNoContent = () => {
-    if (value?.length > 2) {
-      if (data !== []) {
-        return "Loading...";
       } else {
-        return "Not Found";
+        setResult(<h3>Not Found</h3>);
+        setData([]);
       }
     } else {
-      return null;
+      console.log(999);
+      setResult(null);
     }
   };
+
   const handleChange = (newValue) => {
     if (newValue !== undefined && newValue.length > 2) {
       fn(newValue);
     }
     console.log(newValue);
-    setValue(newValue);
+    setValue("");
 
     newValue &&
       message.success({
@@ -51,12 +49,13 @@ function Autocomplete({ fn, width, focusWidth }) {
       dropdownStyle={{ fontWeight: "bold" }}
       popupClassName="menu"
       dropdownMatchSelectWidth={false}
+      notFoundContent={result}
       autoFocus
       allowClear
       suffixIcon={<i style={{}} className="fa-solid fa-magnifying-glass"></i>}
       className="select"
       showSearch
-      size={size}
+      size="large"
       value={value}
       placeholder="Search for a city here."
       style={{ width: focusWidth }}

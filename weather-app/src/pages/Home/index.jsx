@@ -19,40 +19,57 @@ import { getWeather } from "../../utiles/weatherapi";
 import { createContext } from "react";
 import { useOutletContext } from "react-router-dom";
 import CardSwiper from "../../component/CardSwiper";
-import 'swiper/css';
-let index = 0;
-let left = 0;
+import "swiper/css";
 
 const Home = () => {
+  const [spin, setSpin] = useState(false);
   const [cities] = useOutletContext();
   console.log(cities);
-  const { contrast, tertiary, secondary, primary } = useContext(ThemeContext);
+  const { theme, cookies } = useContext(ThemeContext);
+  const { contrast, tertiary, secondary, primary } = theme;
   const useDom = useRef(null);
   const [temp, setTemp] = useState(0);
   const [apiData, setApiData] = useState([]);
-    const card=useRef(null)
-   
+  const card = useRef(null);
+  const spinHandler = () => {
+    console.log(cookies);
+    if (!apiData.length) {
+      //if  api Dta no exist
+      if (!cookies) {
+        //if not exist
+        setSpin(false); //if has cookies
+      } else {
+        setSpin(true); //if no cookies
+      }
+    } else {
+      setSpin(false);
+    }
+  };
   useEffect(() => {
-   console.log(Boolean(apiData.length));
-   console.log(cities,"123456");
-    getWeather(cities).then((res) => {
-      setApiData(res);
-      return true;
-    });
+    spinHandler();
+    if (cities[0]) {
+      getWeather(cities).then((res) => {
+        setApiData(res);
+        return true;
+      });
+    } else {
+      setApiData([]);
+    }
   }, [cities]);
-
 
   return (
     <>
-    
-            
-   
       <div className="container">
-             <Spin size="large" wrapperClassName="spin" spinning={!apiData.length} tip='Loading...' >  </Spin>
-            <CardSwiper cardData={apiData} ></CardSwiper>
-          
+        <Spin
+          size="large"
+          wrapperClassName="spin"
+          spinning={spin}
+          tip="Loading..."
+        >
+          {" "}
+        </Spin>
+        <CardSwiper cardData={apiData}></CardSwiper>
       </div>
-     
     </>
   );
 };
