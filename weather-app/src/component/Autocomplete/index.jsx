@@ -7,8 +7,7 @@ import "./index.scss";
 function Autocomplete({ fn, width, focusWidth }) {
   const [value, setValue] = useState();
   const [data, setData] = useState([]);
-
-  const [curwidth, setWidth] = useState(width);
+  const [size, setSize] = useState("middle");
   const handleSearch = (newValue) => {
     if (newValue) {
       if (newValue.length > 2 && newValue !== undefined) {
@@ -48,25 +47,24 @@ function Autocomplete({ fn, width, focusWidth }) {
       });
   };
   return (
-    
     <Select
+      dropdownStyle={{ fontWeight: "bold" }}
+      popupClassName="menu"
       dropdownMatchSelectWidth={false}
+      autoFocus
       allowClear
       suffixIcon={<i style={{}} className="fa-solid fa-magnifying-glass"></i>}
-      onFocus={() => setWidth(focusWidth)}
-      onBlur={() => setWidth(width)}
       className="select"
       showSearch
-      size="large"
+      size={size}
       value={value}
       placeholder="Search for a city here."
-      style={{ width: curwidth }}
+      style={{ width: focusWidth }}
       defaultActiveFirstOption={false}
       showArrow={true}
       filterOption={false}
       onSearch={handleSearch}
       onChange={handleChange}
-     
       options={(data || []).map(({ country, region, name }) => {
         return {
           value: name,

@@ -11,14 +11,13 @@ import { Navigation } from "swiper";
 
 const CardSwiper = ({ cardData }) => {
   const { contrast, tertiary, secondary, primary } = useContext(ThemeContext);
-  
+
   return (
     <>
       <Swiper
         navigation={true}
         slidesPerView={1}
         spaceBetween={0}
-       
         breakpoints={{
           640: {
             slidesPerView: 2,
@@ -40,7 +39,6 @@ const CardSwiper = ({ cardData }) => {
           const { maxtemp_c, mintemp_c } = forecast.forecastday[0].day;
           return (
             <SwiperSlide key={index}>
-          
               <Card
                 style={{ background: secondary }}
                 className="card"
@@ -53,6 +51,7 @@ const CardSwiper = ({ cardData }) => {
                   color: contrast,
                 }}
                 headStyle={{
+                  border: "none",
                   width: "100%",
                   background: secondary,
                   color: contrast,

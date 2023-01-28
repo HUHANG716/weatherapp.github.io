@@ -7,12 +7,20 @@ import { useTheme } from "../../utiles/theme";
 import { Outlet } from "react-router-dom";
 import { createContext } from "react";
 import Autocomplete from "../../component/Autocomplete";
+import { useEffect } from "react";
 export const ThemeContext = createContext();
 const { Header, Footer, Content } = Frame;
 
 const Layout = () => {
   const [cities, setCities] = useState(["London", "Beijing", "Sydney","Tokyo","Paris"]);
+  
+   useEffect(()=>{
+    if(window.localStorage.getItem('saved')){setCities(window.localStorage.getItem('saved').split(','))}
+   },[])
   const fn = (input) => {
+   
+    window.localStorage.setItem('saved',[input].concat(cities))
+ 
     setCities([input].concat(cities));
   };
   const [curtTheme, setCurtTheme] = useState("dark");

@@ -34,6 +34,7 @@ const Home = () => {
    
   useEffect(() => {
    console.log(Boolean(apiData.length));
+   console.log(cities,"123456");
     getWeather(cities).then((res) => {
       setApiData(res);
       return true;
