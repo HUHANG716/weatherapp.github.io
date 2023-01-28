@@ -9,7 +9,6 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
 import { useOutletContext } from "react-router-dom";
-
 const CardSwiper = ({ cardData }) => {
   const { theme, deleteCard } = useContext(ThemeContext);
   const { contrast, tertiary, secondary, primary } = theme;
@@ -35,8 +34,7 @@ const CardSwiper = ({ cardData }) => {
           },
         }}
         modules={[Pagination, Navigation]}
-        className="mySwiper"
-      >
+        className="mySwiper">
         {cardData.map(({ current, location, forecast }, index) => {
           const { maxtemp_c, mintemp_c } = forecast.forecastday[0].day;
           return (
@@ -49,14 +47,8 @@ const CardSwiper = ({ cardData }) => {
                   <div className="title-container">
                     {location.name}
 
-                    <div
-                      style={{ borderRadius: "100px" }}
-                      onClick={() => deleteCard(location.name)}
-                    >
-                      <i
-                        style={{ color: contrast }}
-                        className="x-icon fa-solid fa-xmark"
-                      ></i>
+                    <div style={{ borderRadius: "100px" }} onClick={() => deleteCard(location.name)}>
+                      <i style={{ color: contrast }} className="x-icon fa-solid fa-xmark"></i>
                     </div>
                   </div>
                 }
@@ -74,60 +66,32 @@ const CardSwiper = ({ cardData }) => {
                 }}
                 cover={
                   <div style={{ width: "100%" }}>
-                    <img
-                      style={{ height: "128px", width: "128px" }}
-                      alt="example"
-                      src={current.condition.icon}
-                    />
+                    <img style={{ height: "128px", width: "128px" }} alt="example" src={current.condition.icon} />
                     <div className="info-container">
-                      <Typography.Title style={{ margin: 0, color: contrast }}>
-                        {current.temp_c}°C
-                      </Typography.Title>
+                      <Typography.Title style={{ margin: 0, color: contrast }}>{current.temp_c}°C</Typography.Title>
 
-                      <Typography.Title
-                        level={5}
-                        style={{ margin: 0, color: contrast }}
-                      >
+                      <Typography.Title level={5} style={{ margin: 0, color: contrast }}>
                         {current.condition.text}
                       </Typography.Title>
                     </div>
                   </div>
-                }
-              >
+                }>
                 <div className="card-footer">
                   <Space.Compact direction="vertical">
-                    <i
-                      style={{ color: "#597ef7" }}
-                      className="fa-sharp fa-solid fa-caret-down"
-                    ></i>
-                    <Typography.Text
-                      strong
-                      style={{ margin: 0, color: contrast }}
-                    >
+                    <i style={{ color: "#597ef7" }} className="fa-sharp fa-solid fa-caret-down"></i>
+                    <Typography.Text strong style={{ margin: 0, color: contrast }}>
                       {mintemp_c}°C
                     </Typography.Text>
-                    <Typography.Text
-                      strong
-                      style={{ margin: 0, color: "#597ef7" }}
-                    >
+                    <Typography.Text strong style={{ margin: 0, color: "#597ef7" }}>
                       Min
                     </Typography.Text>
                   </Space.Compact>
                   <Space.Compact direction="vertical">
-                    <i
-                      style={{ color: "#ff4d4f" }}
-                      className="up fa-sharp fa-solid fa-caret-up"
-                    ></i>{" "}
-                    <Typography.Text
-                      strong
-                      style={{ margin: 0, color: contrast }}
-                    >
+                    <i style={{ color: "#ff4d4f" }} className="up fa-sharp fa-solid fa-caret-up"></i>{" "}
+                    <Typography.Text strong style={{ margin: 0, color: contrast }}>
                       {maxtemp_c}°C
                     </Typography.Text>
-                    <Typography.Text
-                      strong
-                      style={{ margin: 0, color: "#ff4d4f" }}
-                    >
+                    <Typography.Text strong style={{ margin: 0, color: "#ff4d4f" }}>
                       Max
                     </Typography.Text>
                   </Space.Compact>

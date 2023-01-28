@@ -1,36 +1,21 @@
-import {
-  Button,
-  Card,
-  Col,
-  Drawer,
-  Row,
-  Space,
-  Typography,
-  message,
-  Spin,
-} from "antd";
+import { Spin } from "antd";
 import React, { useEffect } from "react";
 import { useContext } from "react";
 import { ThemeContext } from "../Layout";
-import { useRef } from "react";
-import "./index.scss";
 import { useState } from "react";
 import { getWeather } from "../../utiles/weatherapi";
-import { createContext } from "react";
 import { useOutletContext } from "react-router-dom";
 import CardSwiper from "../../component/CardSwiper";
 import "swiper/css";
-
+import "./index.scss";
 const Home = () => {
   const [spin, setSpin] = useState(false);
   const [cities] = useOutletContext();
   console.log(cities);
-  const { theme, cookies } = useContext(ThemeContext);
-  const { contrast, tertiary, secondary, primary } = theme;
-  const useDom = useRef(null);
-  const [temp, setTemp] = useState(0);
+  const { cookies } = useContext(ThemeContext);
+
   const [apiData, setApiData] = useState([]);
-  const card = useRef(null);
+
   const spinHandler = () => {
     console.log(cookies);
     if (!apiData.length) {
@@ -60,12 +45,7 @@ const Home = () => {
   return (
     <>
       <div className="container">
-        <Spin
-          size="large"
-          wrapperClassName="spin"
-          spinning={spin}
-          tip="Loading..."
-        >
+        <Spin size="large" wrapperClassName="spin" spinning={spin} tip="Loading...">
           {" "}
         </Spin>
         <CardSwiper cardData={apiData}></CardSwiper>
