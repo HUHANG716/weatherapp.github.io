@@ -8,8 +8,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
-import { useOutletContext } from "react-router-dom";
-const CardSwiper = ({ cardData }) => {
+const CardSwiper = ({ cities, cardData }) => {
   const { theme, deleteCard } = useContext(ThemeContext);
   const { contrast, tertiary, secondary, primary } = theme;
 
@@ -18,7 +17,6 @@ const CardSwiper = ({ cardData }) => {
       <Swiper
         navigation={true}
         slidesPerView={1}
-        spaceBetween={0}
         breakpoints={{
           440: {
             slidesPerView: 2,
@@ -35,7 +33,8 @@ const CardSwiper = ({ cardData }) => {
         }}
         modules={[Pagination, Navigation]}
         className="mySwiper">
-        {cardData.map(({ current, location, forecast }, index) => {
+        {cardData.map((card, index) => {
+          const { current, location, forecast } = card;
           const { maxtemp_c, mintemp_c } = forecast.forecastday[0].day;
           return (
             <SwiperSlide key={index}>
@@ -45,9 +44,9 @@ const CardSwiper = ({ cardData }) => {
                 hoverable
                 title={
                   <div className="title-container">
-                    {location.name}
+                    {cities[index]}
 
-                    <div style={{ borderRadius: "100px" }} onClick={() => deleteCard(location.name)}>
+                    <div style={{ borderRadius: "100px" }} onClick={() => deleteCard(cities[index])}>
                       <i style={{ color: contrast }} className="x-icon fa-solid fa-xmark"></i>
                     </div>
                   </div>

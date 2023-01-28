@@ -2,15 +2,15 @@ import { Select, message, Spin } from "antd";
 import React from "react";
 import { useState } from "react";
 import { getCities } from "../../utiles/weatherapi";
-import { useTheme } from "../../utiles/theme";
 import "./index.scss";
 let temp = [];
-function Autocomplete({ fn, width, focusWidth }) {
+function Autocomplete({ onAddStorage, width, focusWidth }) {
   const [value, setValue] = useState();
   const [data, setData] = useState([]);
 
   const [result, setResult] = useState(null);
   const handleSearch = (newValue) => {
+    console.log(newValue, "newValue");
     if (newValue) {
       if (newValue.length > 2 && newValue !== undefined) {
         setResult(<Spin></Spin>);
@@ -26,16 +26,16 @@ function Autocomplete({ fn, width, focusWidth }) {
         setData([]);
       }
     } else {
-      console.log(999);
       setResult(null);
     }
   };
 
   const handleChange = (newValue) => {
     if (newValue !== undefined && newValue.length > 2) {
-      fn(newValue);
+      console.log(newValue, "newValue");
+      onAddStorage(newValue);
     }
-    console.log(newValue);
+
     setValue("");
 
     newValue &&
@@ -66,7 +66,7 @@ function Autocomplete({ fn, width, focusWidth }) {
       onChange={handleChange}
       options={(data || []).map(({ country, region, name }) => {
         return {
-          value: name,
+          value: name + "",
           label: name + (region && ", " + region) + ", " + country,
         };
       })}

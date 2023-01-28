@@ -1,15 +1,17 @@
-import axios from "axios"
+import axios from "axios";
 
-const http= axios.create({
-    baseURL:'http://api.weatherapi.com/v1',
-    timeout:5000
-})
+const http = axios.create({
+  baseURL: "https://api.weatherapi.com/v1",
+  timeout: 5000,
+});
 
+http.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
-http.interceptors.response.use((response)=>{
-    return response
-},(error)=>{
-    return Promise.reject(error)
-})
-
-export {http}
+export { http };

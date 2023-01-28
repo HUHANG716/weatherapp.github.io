@@ -10,31 +10,22 @@ import "swiper/css";
 import "./index.scss";
 const Home = () => {
   const [spin, setSpin] = useState(false);
-  const [cities] = useOutletContext();
-  console.log(cities);
+  const [cities, title] = useOutletContext();
+
   const { cookies } = useContext(ThemeContext);
 
   const [apiData, setApiData] = useState([]);
 
   const spinHandler = () => {
-    console.log(cookies);
-    if (!apiData.length) {
-      //if  api Dta no exist
-      if (!cookies) {
-        //if not exist
-        setSpin(false); //if has cookies
-      } else {
-        setSpin(true); //if no cookies
-      }
-    } else {
-      setSpin(false);
-    }
+    !apiData.length || (cities[0] && setSpin(true));
   };
   useEffect(() => {
     spinHandler();
     if (cities[0]) {
+      setSpin(true);
       getWeather(cities).then((res) => {
         setApiData(res);
+        setSpin(false);
         return true;
       });
     } else {
@@ -48,7 +39,7 @@ const Home = () => {
         <Spin size="large" wrapperClassName="spin" spinning={spin} tip="Loading...">
           {" "}
         </Spin>
-        <CardSwiper cardData={apiData}></CardSwiper>
+        <CardSwiper cities={cities} title={title} cardData={apiData}></CardSwiper>
       </div>
     </>
   );
